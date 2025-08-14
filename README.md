@@ -2,6 +2,10 @@
 
 A Flask-based web app that generates hilarious, fake news headlines for entertainment purposes only.
 
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Flask](https://img.shields.io/badge/Flask-2.x-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 ## ✨ Features
 - Generates random funny news headlines
 - Lightweight Flask backend
@@ -17,7 +21,11 @@ A Flask-based web app that generates hilarious, fake news headlines for entertai
 ![App Screenshot](screenshot.png)  
 
 ---
-
+## 😂 Sample Headlines
+- "Scientists Confirm Pizza is a Vegetable After All"
+- "Dog Elected Mayor, Promises More Parks and Treats"
+- "Time Traveler Warns of 2024, But Only Complains About Traffic"
+---
 ## 🚀 Installation & Setup
 
 ### 1. Clone the repository
