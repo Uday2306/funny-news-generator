@@ -1,0 +1,52 @@
+# =========================
+# Python / Flask .gitignore
+# =========================
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Environment variables / secrets
+*.env
+.env.*
+
+# Flask instance folder
+instance/
+
+# Logs
+*.log
+
+# Compiled files
+*.pyo
+*.pyd
+*.pdb
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage / testing
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+.pytest_cache/
+
+# Packaging
+build/
+dist/
+*.egg-info/

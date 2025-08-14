@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Generator</title>
+    <!-- Load html2canvas from CDN -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fceabb, #f8b500);
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 50px 20px;
+            background: #fff8dc;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 700px;
+            margin: 100px auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ff7043;
+        }
+        .headline {
+            font-size: 24px;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #2e2e2e;
+        }
+        .btn_up {
+            display: inline-block;
+            background-color: #ff7043;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #ff5722;
+        }
+        #screenshot-area {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+        margin: 10px;
+        padding: 15px;
+        border-radius: 50%;
+        font-size: 24px;
+        text-align: center;
+        color: white;
+        width: 50px;
+        height: 50px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    #whatsapp-share { background-color: #25D366; }
+    #twitter-share { background-color: #1DA1F2; }
+    #facebook-share { background-color: #3b5998; }
+
+    .btn:hover {
+        transform: scale(1.1);
+    }
+    #headlines_style a:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    }
+    .vote-btn {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .vote-btn:hover {
+        background-color: #eee;
+    }
+
+
+    </style>
+</head>
+<body>
+     <div class="container">
+        <h1>😂 Fake News Generator</h1>
+        <div id="screenshot-area">
+        <p class="headline" id="headline-text">{{ headline }}</p>
+        </div>
+        <!-- Copy to Clipboard Button -->
+        <button onclick="copyToClipboard()" class="btn_up">Copy to Clipboard</button>
+        <a href="/" class="btn_up">Generate Another</a>
+        <button onclick="downloadImage()" class="btn_up">Download as Image</button>
+        <div style="margin-top: 20px;">
+            <a id="whatsapp-share" class="btn" title="Share on WhatsApp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <a id="twitter-share" class="btn" title="Share on Twitter" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+
+            <a id="facebook-share" class="btn" title="Share on Facebook" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button onclick="vote('funny')" class="vote-btn">😂 Funny</button>
+            <button onclick="vote('notfunny')" class="vote-btn">🙄 Not Funny</button>
+        </div>
+        <div id="haedlines_style" style="margin-top: 30px; text-align: center;">
+            <a href="{{ url_for('top_headlines') }}" target="_blank" style="
+                display: inline-block;
+                padding: 12px 24px;
+                background-color: #4CAF50;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                text-decoration: none;
+                border-radius: 8px;
+                box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+                transition: all 0.2s ease-in-out;
+            ">
+                😂 View Top 10 Funny Headlines
+            </a>
+        </div>
+
+        <p id="vote-result" style="margin-top: 10px;"></p>
+    </div>
+    <!-- Here the script begains -->
+     <script>
+        function copyToClipboard() {
+            const text = document.getElementById("headline-text").innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert("✅ Headline copied to clipboard!");
+            }).catch(function(err) {
+                alert("❌ Failed to copy: " + err);
+                console.error(err);
+            });
+        }
+        function downloadImage() {
+        const captureArea = document.getElementById("screenshot-area");
+        html2canvas(captureArea).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'fake_news.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+        }
+        function updateShareLinks() {
+        const text = document.getElementById("headline-text").innerText;
+        const encodedText = encodeURIComponent(text);
+
+        document.getElementById("whatsapp-share").href = `https://wa.me/?text=${encodedText}`;
+        document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?text=${encodedText}`;
+        document.getElementById("facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=https://example.com&quote=${encodedText}`;
+    }
+
+    // Run when page loads
+    window.onload = updateShareLinks;
+    function vote(type) {
+        const result = document.getElementById("vote-result");
+        if (type === "funny") {
+            result.innerText = "Thanks for the laugh! 😂";
+        } else {
+            result.innerText = "We'll try harder next time. 🙈";
+        }
+    }
+    function vote(type) {
+        const headline = document.getElementById("headline-text").innerText;
+        fetch('/vote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ headline: headline, vote_type: type })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("vote-result").innerText = data.message;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+    </script>
+</body>
+   
+</html>
