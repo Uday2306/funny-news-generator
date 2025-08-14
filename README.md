@@ -15,7 +15,6 @@ A Flask-based web app that generates hilarious, fake news headlines for entertai
 
 ## 📸 Demo
 ![App Screenshot](screenshot.png)  
-*(Replace with your own screenshot)*
 
 ---
 
